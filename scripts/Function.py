@@ -134,3 +134,24 @@ class DescrStat:
             'min_non_outlier' : q1-(irq*1.5)
         }
         return pd.Series(data_stats)
+    
+    
+    #FUNCION PARA COMPARAR DENSIDAD DE DISTRIBUCIONES ANTES Y DESPUES DE IMPUTAR
+    def comparison_dist(data_1:pd.Series, data_2:pd.Series, action:str, x_label:str, fig_size:tuple):
+        plt.style.use("bmh")    
+        fig, ax = plt.subplots(ncols=2, nrows=1, figsize=fig_size)
+
+        #GRAFICO 1
+        sns.kdeplot(x=data_1, ax=ax[0])
+        ax[0].set_title('Distribucion original')
+        ax[0].set_xlabel(x_label)
+
+        #GRAFICO 2
+        sns.kdeplot(data=data_2, ax=ax[1])
+        ax[1].set_xlabel(x_label)
+        ax[1].set_title(f'Distribucion despues de {action}') #ACTION(IMPUTAR, ELIMINAR)
+
+        #PLOTEO
+        plt.tight_layout()
+        plt.show()
+        plt.style.use("default")
